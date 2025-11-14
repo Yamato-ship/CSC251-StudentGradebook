@@ -82,6 +82,7 @@ int addStudent(sqlite3 * db){
             printf("Please enter a valid 9-digit ID: ");
             scanf("%19s", id);
         }
+    }
     
         /*do{
     fprintf(stderr, "Enter studentID (9 digits): ");
