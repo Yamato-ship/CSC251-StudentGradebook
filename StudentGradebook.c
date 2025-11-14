@@ -1,6 +1,5 @@
-#include<stdio.h>
-#include<stdio.h>
-#include"sqlite/sqlite3.c"
+#include<stdio.h> 
+#include"sqlite/sqlite3.c" 
 #include<stdbool.h>
 
 //int displayRecords(sqlite3 * db); should display all relevent data on based on ID
@@ -55,46 +54,26 @@ int main(int argc, char const *argv[]){
 }
 
 int addStudent(sqlite3 * db){
-    char *err_msg = NULL;
+    char *err_msg = 0;
     char firstName[30], lastName[30], sql_qry[256];
-    char inputID[20];
-    int digit;
+    int inputID;
 
     //Should take max of 30 characters
     fprintf(stderr, "Enter student first name (Max 30 Char): ");
-    scanf("%29s", firstName);
+    scanf("%30s", &firstName);
     fprintf(stderr, "Enter student last name (Max 30 Char): ");
-    scanf("%29s", lastName);
+    scanf("%30s", &lastName);
 
     //checks id is 9 digits, problem when ID starts with 0 (000001234)
-     //Optimized for rejecting numbers less than 9 digits and allows leading 0's (Moises)
-    while (1) //while true
-    {
-        digit = 0; //Digit count
-        while(inputID[digit] != '\0')
-        {
-            digit++;
-        }
-        if(digit == 9 && strspn(inputID, "0123456789") == 9)
-        {
-            break;
-        }
-        else
-        {
-            printf("Please enter a valid 9-digit ID: ");
-            scanf("%19s", inputID);
-        }
-    }
-    
-        /*do{
+    do{
     fprintf(stderr, "Enter studentID (9 digits): ");
     scanf("%d", &inputID);
-    } while (inputID < 100000000 || inputID > 999999999);*/
+    } while (inputID < 100000000 || inputID > 999999999);
     
     //snprintf for strings
     int numericID = atoi(inputID);
     snprintf(sql_qry, sizeof(sql_qry), "INSERT INTO students (studentID, firstName,lastName) VALUES"
-                "(%d, '%s', '%s');", numericID, firstName, lastName);
+                "(%d, '%s', '%s');", inputID, firstName, lastName);
     
 
     int conn = sqlite3_exec(db, sql_qry, 0, 0, &err_msg);
