@@ -1,0 +1,38 @@
+Group project txt file
+Program Overview:
+This program is a student grade book management system, this system is written in C and it uses SQLite3 to store the data of students efficiently.
+This program allows a user to add students, delete students, update grades, search students by their number ID and list all students.
+Build instructions:
+For this project you will need a C compiler like GCC, SQLite3 development library which can be installed via package manager, and a terminal to execute the program. For the SQLite3 library, you can use Homebrew to install it using the command: brew install sqlite
+To compile the program, you will need to use the following command on the terminal:
+gcc StudentGradebook.c -o StudentGradebook -lsqlite3
+To run the program you will need to used the following command on the terminal:
+./StudentGradebook
+Using the program:
+After you run the commands on the terminal, the program will run and an interactive menu will come up giving you several options to choose from, you can select a choice by simply typing the number of the choice you wish to execute. The user will have the option to 1) Add a student, 2) Remove a student, 3) Find a student, 4) Update a grade, 5) List all students, 6) Show statistics and 7) Exit the program, the user will be prompted to input an option.
+If the user's option is 1, the user will be prompted to enter the student's first name, then the last name, both of these have a limit of 30 characters, if the user exceed this limit, the user will be prompted to input a valid name and last name. After that, the program will ask for a 9 digit student ID, the user cannot exceed the 9 character limit or input something below 9 characters, it has to be exactly 9 characters, if this requirement isn't met, the program will ask the user to input a valid ID, this will loop until a valid ID is inputted. Next the program will ask for 5 grades to be inputted, these grades can only be in between the range of 0 to 100, and they need to be spaced, any grade that is a negative number or goes above 100 will not be accepted by the program and you'll be asked to input valid grades. 
+If user selects option 2, they will be prompted to enter a 9 digit ID that already exists in the database, if the number can't be found, the program will let the user know that the number does not exist in the database and it will ask the user to input a valid ID.
+If user selects option 3, the program will ask the user to input a student ID to find, if this ID is found, the program will let the user know that it exists, otherwise, it will let the user know that the ID cannot be found in the database.
+If user selects option 4, the program will ask the user to input the student's ID, which grade to change from the 5 given earlier and the new grade to change it for. 
+The way in which the output will be formatted for each student is:
+ID: 123456789 | Name: James Cruz | Grades: 88, 15, 76, 100, 55
+In order to access the data being stored in the database, you will have to run the following commands:
+sqlite3 students.db
+Once inside, you will use the command:
+SELECT * FROM students; 
+This will allow you to see the data stored in the order previously listed.
+To leave the database you will use the command:
+.quit
+Limitations of this program:
+Spaces in names are not supported, if you have a second name, you will most likely not be able to input it.
+There is no invalid non-numeric input, if letters are inputted where numbers are meant to go, this can break execution.
+The student ID's are stored as integers, this can be a problem in the sense of allowing leading 0's.
+If there are missing values such as grades, those missing values will default to null.
+Since the database is being accessed simultaneously, this can lead to corruption of it.
+Work Breakdown & Contributions:
+Moises Lima Martinez
+- Implementing the option menu.
+- Correcting logic of ID input, name input and options input.
+- Improving the way in which the information was being stored and retrieved when needed to delete a student or search for a student.
+- Improving deleteStudent function by improving the search of ID and providing error messages to let user know if student was successfully deleted or ID was not found.
+- Writing README file.
