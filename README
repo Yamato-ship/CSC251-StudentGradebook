@@ -42,5 +42,6 @@ Allen Tran
 -Implemented deleteStudent, should only execute if a valid existing studentID is found
 -Modified switch in main function after invalid inputs are entered(non-integers)
 -Added database columns for grades 1-5
--Set up loops to when initially creating a student to ensure grades are correctly read (non-negative
+-Set up loops so when initially creating a student, grades are correctly read (no negative grades
 and is a valid float value)
+-Checked most functions to ensure inputs are correctly parsed
