@@ -36,3 +36,10 @@ Moises Lima Martinez
 - Improving the way in which the information was being stored and retrieved when needed to delete a student or search for a student.
 - Improving deleteStudent function by improving the search of ID and providing error messages to let user know if student was successfully deleted or ID was not found.
 - Writing README file.
+Henry Le
+- Expanded database to include 5 grade per student
+- Updated addStudent to collect grades during registration 
+- Added listStudents function to display all student records 
+- Added findStudent function to search by student ID 
+- Added updateStudent function to modify grades
+- Added showStatistics function for count, average, high/low
