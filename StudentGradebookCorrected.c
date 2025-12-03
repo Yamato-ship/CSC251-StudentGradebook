@@ -1,9 +1,9 @@
 #include<stdio.h>
 #include <string.h>
-#include "sqlite3.h" //Corrected, no need for sqlite/sqlite3 only sqlite 3
+#include "sqlite/sqlite3.c" //Corrected, no need for sqlite/sqlite3 only sqlite 3
 #include <stdbool.h>
 #include <stdlib.h>
-//int displayRecords(sqlite3 * db); should display all relevent data on based on ID
+
 int addStudent(sqlite3 * db);       //functions take user input, problem when
 int deleteStudent(sqlite3 * db);    //wrong data type is taken in, char into
                                     //studentID input
@@ -29,11 +29,7 @@ int main(int argc, char const *argv[]){
 
     //Can add more columns for data
     char *sql_qry = "CREATE TABLE IF NOT EXISTS students"
-    "(studentID INTEGER PRIMARY KEY, firstName TEXT, lastName TEXT, "
-    "grade1 REAL, grade2 REAL, grade3 REAL, grade4 REAL, grade5 REAL);";
-    //"INSERT INTO students VALUES (222333444, 'See', 'Sim');";
-
-    conn = sqlite3_exec(db, sql_qry, 0, 0, &err_msg);
+    "(studentID INTEGER PRIMARY KEY, firstName TEXT, lastName TEXT);";
 
     //Check #2
     if(conn != SQLITE_OK)
@@ -46,11 +42,33 @@ int main(int argc, char const *argv[]){
     {
         fprintf(stderr, "Table Created Successfully\n");
     }
+
+    // char *sql_add_grade = "ALTER TABLE students ADD COLUMN grade1 REAL;"
+    // "ALTER TABLE students ADD COLUMN grade2 REAL;"
+    // "ALTER TABLE students ADD COLUMN grade3 REAL;"
+    // "ALTER TABLE students ADD COLUMN grade4 REAL;"
+    // "ALTER TABLE students ADD COLUMN grade5 REAL;"
+    // "INSERT INTO students VALUES (123456987, 'Johs', 'Sim', 10, 20, 30, 40, 50.5);";
+    // conn = sqlite3_exec(db, sql_add_grade, 0, 0, &err_msg);
+
+    // //Check #3
+    // if(conn != SQLITE_OK)
+    // {
+    //     fprintf(stderr, "Grade Columns Failed: %s\n", sqlite3_errmsg(db));
+    //     sqlite3_close(db);
+    //     sqlite3_free(err_msg);
+    //     return 1;
+    // }   else
+    // {
+    //     fprintf(stderr, "Grade Columns Created Successfully\n");
+    // }
+
     //FUNCTIONS START HERE
     //probably have interactive switch here to select functions
-    int option; //For switch
+    char option; //For switch
     do
     {
+        fflush(stdin);
         printf("\n========== STUDENT GRADEBOOK ==========\n");
         printf("1) Add a student\n");
         printf("2) Remove a student\n");
@@ -60,35 +78,35 @@ int main(int argc, char const *argv[]){
         printf("6) Show statistics\n");
         printf("7) Exit the program\n");
         printf("Enter your option: ");
-        scanf("%d", &option);
+        scanf("%c", &option);
         switch(option)
         {
-            case 1:
+            case '1':
                 addStudent(db);
                 break;
-            case 2:
+            case '2':
                 deleteStudent(db);
                 break;
-            case 3:
+            case '3':
                 findStudent(db);
                 break;
-            case 4:
+            case '4':
                 updateStudent(db);
                 break;
-            case 5:
+            case '5':
                 listStudents(db);
                 break;
-            case 6:
+            case '6':
                 showStatistics(db);
                 break;
-            case 7:
+            case '7':
                 printf("Thanks for using the database, Goodbye.\n");
                 break;
             default:
                 printf("Please enter a valid option.\n");
                 break;
         }
-    }while(option != 7);
+    }while(option != '7');
 
     //FUNCTIONS END HERE
 
@@ -145,8 +163,87 @@ int addStudent(sqlite3 * db){
     }
 
     //Get 5 grades from user
-    printf("Enter 5 grades (0-100, space-separated): ");
-    scanf("%f %f %f %f %f", &g1, &g2, &g3, &g4, &g5);
+    int valid = 0;
+    do {
+        printf("Enter value for grade 1 (0-100): ");
+        if (scanf("%f", &g1) != 1) {
+            valid = 0;
+            printf("Invalid input. Please enter a numerical grade (0-100).\n");
+            while ((getchar()) != '\n'); 
+        } else if (g1 < 0.0 || g1 > 100.0) {
+            valid = 0;
+            printf("Grade must be between 0.0 and 100.0. Please try again.\n");
+            while ((getchar()) != '\n');
+        } else {
+            valid = 1;
+            printf("Grade 1 recorded: %.2f\n", g1);
+        }
+    } while (valid != 1);
+
+    do {
+        printf("Enter value for grade 2 (0-100): ");
+        if (scanf("%f", &g2) != 1) {
+            valid = 0;
+            printf("Invalid input. Please enter a numerical grade (0-100).\n");
+            while ((getchar()) != '\n'); 
+        } else if (g2 < 0.0 || g2 > 100.0) {
+            valid = 0;
+            printf("Grade must be between 0.0 and 100.0. Please try again.\n");
+            while ((getchar()) != '\n');
+        } else {
+            valid = 1;
+            printf("Grade 2 recorded: %.2f\n", g2);
+        }
+    } while (valid != 1);
+
+    do {
+        printf("Enter value for grade 3 (0-100): ");
+        if (scanf("%f", &g3) != 1) {
+            valid = 0;
+            printf("Invalid input. Please enter a numerical grade (0-100).\n");
+            while ((getchar()) != '\n'); 
+        } else if (g3 < 0.0 || g3 > 100.0) {
+            valid = 0;
+            printf("Grade must be between 0.0 and 100.0. Please try again.\n");
+            while ((getchar()) != '\n');
+        } else {
+            valid = 1;
+            printf("Grade 3 recorded: %.2f\n", g3);
+        }
+    } while (valid != 1);
+
+    do {
+        printf("Enter value for grade 4 (0-100): ");
+        if (scanf("%f", &g4) != 1) {
+            valid = 0;
+            printf("Invalid input. Please enter a numerical grade (0-100).\n");
+            while ((getchar()) != '\n'); 
+        } else if (g4 < 0.0 || g4 > 100.0) {
+            valid = 0;
+            printf("Grade must be between 0.0 and 100.0. Please try again.\n");
+            while ((getchar()) != '\n');
+        } else {
+            valid = 1;
+            printf("Grade 4 recorded: %.2f\n", g4);
+        }
+    } while (valid != 1);
+
+    do {
+        printf("Enter value for grade 5 (0-100): ");
+        if (scanf("%f", &g5) != 1) {
+            valid = 0;
+            printf("Invalid input. Please enter a numerical grade (0-100).\n");
+            while ((getchar()) != '\n'); 
+        } else if (g5 < 0.0 || g5 > 100.0) {
+            valid = 0;
+            printf("Grade must be between 0.0 and 100.0. Please try again.\n");
+            while ((getchar()) != '\n');
+        } else {
+            valid = 1;
+            printf("Grade 5 recorded: %.2f\n", g5);
+        }
+    } while (valid != 1);
+
 
     //snprintf for strings
     int numericID = atoi(inputID);
@@ -174,9 +271,8 @@ int deleteStudent(sqlite3 *db){
     int deleteID = 0, exists = 0;
 
     //checks if ID exists in database (Moises)
-    do
-    {
-        fprintf(stderr, "Enter existing studentID to delete (9 digits): ");
+
+        fprintf(stderr, "Enter existing studentID to delete (Max 9 digits): ");
         scanf("%d", &deleteID);
 
         snprintf(sql_qry, sizeof(sql_qry),
@@ -193,14 +289,15 @@ int deleteStudent(sqlite3 *db){
         }
         if(!exists)
         {
-            printf("Student ID does not exist. Try again.\n"); //If ID does not match then this error message will print
+            printf("Student ID does not exist. Returning to main. \n"); //If ID does not match then this error message will print
+            return 0;
         }
-    } while (!exists); //Loop gets repeated if the ID does not exists and it asks you to input a valid number
+
 
     //only integers so sprintf is fine
     sprintf(sql_qry, "DELETE FROM students WHERE studentID = %d;", deleteID);
 
-    int conn = sqlite3_exec(db, sql_qry, 0, 0, &err_msg);
+    conn = sqlite3_exec(db, sql_qry, 0, 0, &err_msg);
     if(conn != SQLITE_OK){
         fprintf(stderr, "Failed to Remove Student Record: %s\n", sqlite3_errmsg(db));
         sqlite3_close(db);

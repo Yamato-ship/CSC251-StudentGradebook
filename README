@@ -36,3 +36,11 @@ Moises Lima Martinez
 - Improving the way in which the information was being stored and retrieved when needed to delete a student or search for a student.
 - Improving deleteStudent function by improving the search of ID and providing error messages to let user know if student was successfully deleted or ID was not found.
 - Writing README file.
+Allen Tran
+-Setup initial database table 'students' with studentID, firstName, lastName(studentID should be unique keys)
+-Implemented addStudent, names should be correctly read, id should be value(Max of 9 digits)
+-Implemented deleteStudent, should only execute if a valid existing studentID is found
+-Modified switch in main function after invalid inputs are entered(non-integers)
+-Added database columns for grades 1-5
+-Set up loops to when initially creating a student to ensure grades are correctly read (non-negative
+and is a valid float value)

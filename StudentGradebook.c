@@ -2,7 +2,6 @@
 #include"sqlite/sqlite3.c" 
 #include<stdbool.h>
 
-//int displayRecords(sqlite3 * db); should display all relevent data on based on ID
 int addStudent(sqlite3 * db);       //functions take user input, problem when
 int deleteStudent(sqlite3 * db);    //wrong data type is taken in, char into
                                     //studentID input
@@ -71,7 +70,6 @@ int addStudent(sqlite3 * db){
     } while (inputID < 100000000 || inputID > 999999999);
     
     //snprintf for strings
-    int numericID = atoi(inputID);
     snprintf(sql_qry, sizeof(sql_qry), "INSERT INTO students (studentID, firstName,lastName) VALUES"
                 "(%d, '%s', '%s');", inputID, firstName, lastName);
     
