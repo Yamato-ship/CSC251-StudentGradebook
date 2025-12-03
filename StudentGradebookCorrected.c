@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include <string.h>
-#include "sqlite/sqlite3.c" //Corrected, no need for sqlite/sqlite3 only sqlite 3
+#include "sqlite/sqlite3.c"
 #include <stdbool.h>
 #include <stdlib.h>
 
